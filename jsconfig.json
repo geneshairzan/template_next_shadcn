@@ -2,7 +2,9 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "@UI": ["./src/components/ui/index.js"]
+      "@UI": ["./src/components/ui/index.js"],
+      "@context/*": ["./src/components/context/*"],
+      "@context": ["./src/components/context/index.js"]
     }
   }
 }

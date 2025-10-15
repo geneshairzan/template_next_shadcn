@@ -3,9 +3,15 @@
 import Button from "./button";
 import React, { useState, useEffect } from "react";
 import UI from "@UI";
+import { useGlobal } from "@/app/providers";
 
 export default function Home() {
+  const { app } = useGlobal();
   const [onmodal, setonmodal] = useState(false);
+
+  function toggleTheme() {
+    app.set("theme", app.theme === "dark" ? "light" : "dark");
+  }
 
   return (
     <UI.Col p={2} gap={2}>
@@ -52,6 +58,9 @@ export default function Home() {
         blockquote. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam
         fuga, numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
       </UI.Text>
+      <UI.Row>
+        <UI.Button onClick={toggleTheme}>toggle</UI.Button>
+      </UI.Row>
     </UI.Col>
   );
 }
