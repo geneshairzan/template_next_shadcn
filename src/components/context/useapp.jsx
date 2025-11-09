@@ -16,7 +16,7 @@ export default function useApp() {
   const [data, setdata] = useState(
     getStoredData({
       isLoading: false,
-      theme: "dark",
+      theme: "light",
     })
   );
 

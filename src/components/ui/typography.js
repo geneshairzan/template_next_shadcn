@@ -30,6 +30,7 @@ export default function Text({
     error: "text-red-500",
     success: "text-green-500",
     default: "text-gray-800 dark:text-gray-200",
+    muted: "text-gray-500",
   };
 
   // 👇 Check if custom inline color
@@ -50,10 +51,10 @@ export default function Text({
         colorClass,
         className
       )}
-      style={{
-        ...sx,
-        ...(isCustomColor ? { color } : {}),
-      }}
+      // style={{
+      //   ...sx,
+      //   ...(isCustomColor ? { color } : {}),
+      // }}
       {...props}
     >
       {children}

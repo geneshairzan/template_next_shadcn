@@ -2,7 +2,7 @@
 
 import Button from "./button";
 import React, { useState, useEffect } from "react";
-import UI from "@UI";
+import UI from "@ui";
 import { useGlobal } from "@/app/providers";
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
   }
 
   return (
-    <UI.Col p={2} gap={2}>
+    <UI.Col className="p-2 gap-2">
       <Button />
 
       <UI.Row>

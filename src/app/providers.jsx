@@ -23,7 +23,13 @@ export function Providers({ children }) {
     document.body.classList.add(app?.theme || "light");
   }, [app?.theme]);
 
-  //   if (auth?.user === "loading") return <GoogleTagManager gtmId="GTM-XXXXXX" />;
+  // if (auth?.user === "loading") return <GoogleTagManager gtmId="GTM-XXXXXX" />;
+  // if (!app?.theme)
+  //   return (
+  //     <UI.Col fs center>
+  //       <UI.Loader />
+  //     </UI.Col>
+  //   );
 
   return <GlobalContext.Provider value={{ app, r }}>{children}</GlobalContext.Provider>;
 }

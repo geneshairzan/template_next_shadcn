@@ -1,67 +1,56 @@
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-import { Spinner } from "./spinner";
 
-// This defines classes for both `variant` and `color`
+import { cn } from "@/lib/utils"
+
 const buttonVariants = cva(
-  "cursor-pointer capitalize inline-flex gap-2 items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
-        contained: "text-white",
-        outlined: "border",
-        text: "bg-transparent shadow-none",
-      },
-      color: {
-        primary: "bg-primary text-primary-foreground hover:bg-primary/90 border-primary",
-        secondary: "bg-secondary  hover:bg-secondary/80 border-secondary",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 border-destructive",
-        default: "bg-muted text-foreground hover:bg-muted/80 border-muted",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        outline:
+          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost:
+          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        default: "h-9 px-4 py-2 has-[>svg]:px-3",
+        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        icon: "size-9",
+        "icon-sm": "size-8",
+        "icon-lg": "size-10",
       },
     },
-    compoundVariants: [
-      {
-        variant: "outlined",
-        color: "primary",
-        class: "bg-transparent text-primary border border-primary hover:bg-primary/10",
-      },
-      {
-        variant: "text",
-        color: "primary",
-        class: "bg-transparent text-primary hover:bg-primary/10",
-      },
-      {
-        variant: "outlined",
-        color: "secondary",
-        class: "bg-transparent text-secondary border border-secondary hover:bg-secondary/10",
-      },
-      {
-        variant: "text",
-        color: "secondary",
-        class: "bg-transparent text-secondary hover:bg-secondary/10",
-      },
-    ],
     defaultVariants: {
-      variant: "contained",
-      color: "primary",
+      variant: "default",
       size: "default",
     },
   }
-);
+)
 
-export function Button({ className, variant, color, size, loading, children, ...props }) {
+function Button({
+  className,
+  variant,
+  size,
+  asChild = false,
+  ...props
+}) {
+  const Comp = asChild ? Slot : "button"
+
   return (
-    <button className={cn(buttonVariants({ variant, color, size, className }))} {...props}>
-      {loading && <Spinner />}
-      {children}
-    </button>
+    <Comp
+      data-slot="button"
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props} />
   );
 }
 
-export { buttonVariants };
+export { Button, buttonVariants }

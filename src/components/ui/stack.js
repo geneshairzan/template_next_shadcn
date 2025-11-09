@@ -1,15 +1,21 @@
-export default function Layout({ row = false, className, spaced = false, p = 0, gap = 0, onClick, children }) {
+import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
+
+export default function Stack({ row = false, className = "", fs = false, spaced = false, center = false, onClick, children }) {
+  const classes = twMerge(
+    clsx(
+      "flex",
+      row ? "flex-row" : "flex-col",
+      fs && "h-screen w-screen",
+      spaced && "items-center justify-between",
+      center && "items-center justify-center",
+      onClick && "cursor-pointer",
+      className
+    )
+  );
+
   return (
-    <div
-      className={`p-${p} gap-${gap} flex ${row ? "flex-row" : "flex-col"}
-  ${spaced && "aitems-center justify-between"}
-  ${onClick && "cursor-pointer"}
-
-
-  ${className}
-  `}
-      onClick={onClick}
-    >
+    <div className={classes} onClick={onClick}>
       {children}
     </div>
   );
