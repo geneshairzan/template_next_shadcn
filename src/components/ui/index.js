@@ -5,6 +5,7 @@ import Modal, { ModalContainer } from "./modal";
 import Icon from "./icon";
 import Text from "./typography";
 import Spinner from "./spinner";
+import Image from "next/image";
 
 const UI = {
   Button,
@@ -16,6 +17,7 @@ const UI = {
   Icon,
   Loader: Spinner,
   Text,
+  Img: Image,
 };
 
 export default UI;

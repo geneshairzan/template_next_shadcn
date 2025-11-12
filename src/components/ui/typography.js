@@ -15,7 +15,9 @@ export default function Text({
 }) {
   // 👇 Variants control base typography styles
   const variantMap = {
-    title: "text-[18px]",
+    hero: "text-[36px]",
+    title24: "text-[24px]",
+    title: "text-[22px]",
     subtitle: "text-[18px]",
     body: "text-[16px]",
     small: "text-[14px]",
@@ -31,12 +33,12 @@ export default function Text({
     success: "text-green-500",
     default: "text-gray-800 dark:text-gray-200",
     muted: "text-gray-500",
+    grey: "text-gray-800",
   };
 
   // 👇 Check if custom inline color
   const isCustomColor = /^#|rgb|hsl/.test(color);
   const colorClass = isCustomColor ? "" : colorMap[color] || `text-${color}`;
-
   return (
     <span
       className={clsx(
@@ -51,10 +53,6 @@ export default function Text({
         colorClass,
         className
       )}
-      // style={{
-      //   ...sx,
-      //   ...(isCustomColor ? { color } : {}),
-      // }}
       {...props}
     >
       {children}

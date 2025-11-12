@@ -1,5 +1,4 @@
 import UI from "@ui";
-import LinkItem from "@/app/dev/template/linkItem";
 
 export default function App({ label, value }) {
   return (

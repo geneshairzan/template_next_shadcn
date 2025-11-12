@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 
-export default function Stack({ row = false, className = "", fs = false, spaced = false, center = false, onClick, children }) {
+export default function Stack({ row = false, className = "", fs = false, spaced = false, center = false, onClick, children, style }) {
   const classes = twMerge(
     clsx(
       "flex",
@@ -15,7 +15,7 @@ export default function Stack({ row = false, className = "", fs = false, spaced 
   );
 
   return (
-    <div className={classes} onClick={onClick}>
+    <div className={classes} onClick={onClick} style={style}>
       {children}
     </div>
   );

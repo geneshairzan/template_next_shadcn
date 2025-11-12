@@ -55,7 +55,7 @@
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: hsl(222, 98%, 51%);
+  --primary: #0a213d;
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: hsl(18, 93%, 49%);
   --secondary-foreground: oklch(0.208 0.042 265.755);
@@ -123,4 +123,25 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

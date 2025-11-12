@@ -11,7 +11,7 @@ export default function App() {
     initialValues: {},
     validationSchema: null,
     onSubmit: async (payload) => {
-      console.log(payload);
+      // console.log(payload);
     },
   });
 
