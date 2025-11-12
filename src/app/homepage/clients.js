@@ -215,6 +215,8 @@ function BrandList({ active, onClick }) {
             <Image
               src={`/assets/img/folio/${d.id}/${d.logo}`}
               alt=""
+              width={90}
+              height={90}
               style={{
                 transform: active != ix && "rotateY(180deg)",
                 objectFit: "contain",
@@ -240,6 +242,8 @@ function BGHandler({ visible, duration, asset }) {
         <UI.Img
           src={"/assets/img/client-bg.webp"}
           alt=""
+          width={1920}
+          height={720}
           style={{
             objectFit: "cover",
             width: "100%",
@@ -250,36 +254,6 @@ function BGHandler({ visible, duration, asset }) {
         />
       </motion.div>
     </UI.Col>
-  );
-}
-
-function SSHandler({ visible, duration, asset }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: visible ? 1 : 0 }}
-      transition={duration} // 1-second fade duration
-    >
-      <UI.Col
-        sx={{
-          width: "100%",
-          right: 0,
-          top: 160,
-          zIndex: 1,
-          maxWidth: "100%",
-        }}
-      >
-        <UI.Img
-          src={asset}
-          alt=""
-          style={{
-            objectFit: "cover",
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      </UI.Col>
-    </motion.div>
   );
 }
 

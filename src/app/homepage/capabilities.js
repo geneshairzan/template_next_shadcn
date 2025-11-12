@@ -18,13 +18,15 @@ let data = [
 
 export default function App(props) {
   return (
-    <UI.Col className="min-h-[360px] " center>
-      <UI.Col className="w-screen  max-w-[1280px] gap-[100px]  gap-5 py-[120px] px-2 md:px-[5%]">
-        <UI.Row className="flex-1 gap-2 justify-between flex-col md:flex-row ">
+    <UI.Col className="min-h-[360px] px-2 md:px-[5%]" center>
+      <UI.Col className="w-screen max-w-[1280px] gap-[100px] gap-5 py-[120px] ">
+        <UI.Row className="flex-1 gap-2 justify-between flex-col md:flex-row w-full ">
           <UI.Col className="flex-1 w-[100%] md:w-[100%] pt-3">
             <UI.Img
               src="/assets/img/logo-black.svg"
               alt=""
+              width={300}
+              height={1}
               className="fill-[#0a213d]"
               style={{
                 marginRight: "32px",

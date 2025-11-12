@@ -24,6 +24,8 @@ export default function App(props) {
       <UI.Img
         src="/assets/img/server-room.webp"
         alt=""
+        width={1920}
+        height={720}
         style={{
           position: "absolute",
           top: 0,

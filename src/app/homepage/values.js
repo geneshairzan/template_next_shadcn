@@ -4,7 +4,7 @@ export default function App(props) {
   return (
     <UI.Col className="relative w-screen z-10 ">
       <UI.Col className="h-[90px] flex-shrink-0 bg-white [clip-path:polygon(100%_0,100%_100%,0_100%)]" />
-      <UI.Col className="px-2 md:px-[5%] py-10 item-center bg-white">
+      <UI.Col className="px-2 md:px-[5%] py-10 item-center bg-white " center>
         <Content />
       </UI.Col>
       <UI.Col className="h-[90px] flex-shrink-0 bg-white [clip-path:polygon(0_0,100%_0,0_100%)]" />
@@ -13,7 +13,7 @@ export default function App(props) {
 }
 function Content(props) {
   return (
-    <UI.Col className="max-w-[1280px] gap-5 md:flex-row w-screen justify-between">
+    <UI.Col className="w-screen max-w-[1280px] gap-5 md:flex-row w-screen justify-between">
       <V1 />
       <V2 />
     </UI.Col>
