@@ -21,7 +21,7 @@ export default function Example() {
         r.push("/");
       }
     }
-  }, [auth?.id]);
+  }, [auth, r]);
 
   return (
     <UI.Col className="w-screen h-screen justify-center items-center">

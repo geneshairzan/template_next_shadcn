@@ -1,5 +1,5 @@
 import UI from "@ui";
-import LinkItem from "@/appx/dev/template/linkItem";
+import LinkItem from "./linkItem";
 
 export default function App(props) {
   return (

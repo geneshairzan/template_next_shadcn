@@ -12,7 +12,7 @@ export default function InputOTPControlled({ label, length = 4, className, helpe
         <InputOTP maxLength={length} value={value} onChange={(v) => onChange(v)}>
           <InputOTPGroup>
             {[...Array(length)].map((_, index) => (
-              <InputOTPSlot index={index} />
+              <InputOTPSlot key={index} index={index} />
             ))}
           </InputOTPGroup>
         </InputOTP>

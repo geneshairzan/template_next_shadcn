@@ -37,11 +37,11 @@ export default function AppMiddleware({ children }) {
 }
 
 function Redirect({ url = "/" }) {
-  const r = useRouter();
+  const { push } = useRouter();
 
   useEffect(() => {
-    r.push(url);
-  }, []);
+    push(url);
+  }, [push, url]);
 
   return <></>;
 }

@@ -3,7 +3,7 @@
 import Button from "./button";
 import React, { useState, useEffect } from "react";
 import UI from "@ui";
-import { useGlobal } from "@/appx/providers";
+import { useGlobal } from "../../../../_trash/appx/providers";
 
 export default function Home() {
   const { app } = useGlobal();

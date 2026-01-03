@@ -11,7 +11,12 @@ export default function WelcomeEmail(props) {
         <Container style={container}>
           <Text style={heading}>Hi there!</Text>
           {typeof props.msg == "string" && <Text style={paragraph}>{props.msg}</Text>}
-          {typeof props.msg != "string" && props.msg.map((d) => <Text style={paragraph}>{d}</Text>)}
+          {typeof props.msg != "string" &&
+            props.msg.map((d, ix) => (
+              <Text key={ix} style={paragraph}>
+                {d}
+              </Text>
+            ))}
           {props?.code && <Text style={code}>{props.code}</Text>}
           {props?.action && (
             <Button

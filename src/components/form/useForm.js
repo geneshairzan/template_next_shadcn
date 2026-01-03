@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 
-export default function extenduseFormik(config) {
+export default function ExtenduseFormik(config) {
   const formik = useFormik(config);
 
   const resetAndSubmit = async () => {
