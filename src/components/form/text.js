@@ -11,7 +11,6 @@ export default function InputWithLabel({ label, className, prefix, suffix, helpe
       <UI.Row
         spaced
         className={cn(
-          // Row handles visual styles
           "gap-2 h-9 w-full items-center rounded-md border px-3 py-1 transition-colors",
           "border-gray-300 bg-transparent text-foreground",
           "hover:border-gray-400 has-[input:focus]:border-primary",
@@ -28,6 +27,7 @@ export default function InputWithLabel({ label, className, prefix, suffix, helpe
             "flex-1 bg-transparent outline-none border-none focus:outline-none text-base md:text-sm"
           )}
           {...props}
+          onChange={(e) => props.onChange && props.onChange(e.target.value)}
         />
         {suffix}
       </UI.Row>

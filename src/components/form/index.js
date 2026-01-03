@@ -8,6 +8,8 @@ import Date from "./date";
 import Time from "./time";
 import HTML from "./html";
 import Checkbox from "./checkbox";
+import { useFormik } from "formik";
+import useForm from "./useForm";
 
 const Form = {
   Text,
@@ -21,3 +23,4 @@ const Form = {
 };
 
 export default Form;
+export { useForm };

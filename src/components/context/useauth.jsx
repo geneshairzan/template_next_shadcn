@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetcher } from "@gh/helper/useFetch";
+import { fetcher } from "@lib/useFetch";
 import { useRouter } from "next/navigation";
 
 export default function useAuth() {

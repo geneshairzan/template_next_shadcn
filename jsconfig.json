@@ -6,7 +6,10 @@
       "@ui": ["./src/components/ui/index.js"],
       "@form": ["./src/components/form/index.js"],
       "@context/*": ["./src/components/context/*"],
-      "@context": ["./src/components/context/index.js"]
+      "@context": ["./src/components/context/index.js"],
+      "@component": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@lib/*": ["./src/lib/*"]
     }
   }
 }
