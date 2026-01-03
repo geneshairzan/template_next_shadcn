@@ -1,23 +1,21 @@
-import prisma from "@/component/gh/helper/orm";
-import enc from "@gh/helper/encryption";
-
-import { getSimpleToken } from "@gh/helper/encryption";
-
-import axios from "axios";
-
-import { render } from "@react-email/render";
-import WelcomeTemplate from "@/component/email/template/main";
-import { sendEmail } from "@/component/email/mailer-node";
+import prisma from "@/lib/prisma";
+import enc, { getSimpleToken } from "@lib/helper/encryption";
 
 export default async function handler(r, res) {
   if (r.method == "POST") {
-    let user = await prisma.where("user", { email: r.body.email, token: r.body.passcode });
+    let { password, ...user } = await prisma.user.findFirst({
+      where: { email: r.body.email, token: r.body.passcode },
+    });
 
     if (user) {
       if (r.body.password) {
-        await prisma.findOrCreate("user", { email: r.body.email }, {}, { token: null, password: r.body.password });
+        await prisma.user.upsert({
+          where: { email: r.body.email },
+          create: { email: r.body.email, name: r.body.name, token: null, password: r.body.password },
+          update: {},
+        });
       }
-      return res.status(200).json(prisma.responseFilter({ ...user, token: await enc.getToken(user) }));
+      return res.status(200).json({ ...user, token: await enc.getToken(user) });
     }
     return res.status(400).json({ message: "err" });
   }

@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "db:migrate": "prisma migrate dev && prisma generate"
+    "db:migrate": "prisma migrate dev && prisma generate",
+    "build": "next build --turbopack",
+    "build:static": "cross-env STATIC_EXPORT=true next build",
+    "deploy": "aws s3 sync ./out s3://project-service-bkl-fe-stg --exclude \"uploads/*\""
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",
@@ -17,6 +19,8 @@
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.3",
+    "@react-email/components": "^1.0.3",
+    "@react-email/render": "^2.0.1",
     "axios": "^1.13.2",
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
@@ -28,6 +32,7 @@
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.542.0",
     "next": "15.5.2",
+    "nodemailer": "^7.0.12",
     "prisma": "^7.2.0",
     "react": "19.1.0",
     "react-day-picker": "^9.11.1",

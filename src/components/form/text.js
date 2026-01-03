@@ -24,7 +24,8 @@ export default function InputWithLabel({ label, className, prefix, suffix, helpe
           data-slot="input"
           className={cn(
             // Input should be visually clean
-            "flex-1 bg-transparent outline-none border-none focus:outline-none text-base md:text-sm"
+            "flex-1 bg-transparent outline-none border-none focus:outline-none text-base md:text-sm",
+            "bg-transparent border-0 outline-none focus:ring-0 focus:outline-none"
           )}
           {...props}
           onChange={(e) => props.onChange && props.onChange(e.target.value)}

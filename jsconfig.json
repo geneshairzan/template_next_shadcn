@@ -9,7 +9,8 @@
       "@context": ["./src/components/context/index.js"],
       "@component": ["./src/components/*"],
       "@/lib/*": ["./src/lib/*"],
-      "@lib/*": ["./src/lib/*"]
+      "@lib/*": ["./src/lib/*"],
+      "@fetcher": ["./src/lib/useFetch.js"]
     }
   }
 }

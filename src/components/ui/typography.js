@@ -40,8 +40,9 @@ export default function Text({
   const isCustomColor = /^#|rgb|hsl/.test(color);
   const colorClass = isCustomColor ? "" : colorMap[color] || `text-${color}`;
   return (
-    <span
+    <p
       className={clsx(
+        "whitespace-nowrap //truncate",
         variantMap[variant],
         {
           "font-bold": bold,
@@ -56,6 +57,6 @@ export default function Text({
       {...props}
     >
       {children}
-    </span>
+    </p>
   );
 }

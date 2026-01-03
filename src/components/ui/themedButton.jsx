@@ -4,7 +4,7 @@ import { Spinner } from "./spinner";
 
 // This defines classes for both `variant` and `color`
 const buttonVariants = cva(
-  "w-full transition-opacity cursor-pointer capitalize inline-flex gap-2 items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background",
+  "w-full transition-opacity cursor-pointer capitalize inline-flex gap-2 items-center justify-center h-12 rounded-full //rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background",
   {
     variants: {
       variant: {
@@ -19,9 +19,8 @@ const buttonVariants = cva(
         default: "bg-muted text-foreground hover:bg-muted/80 border-muted",
       },
       size: {
-        default: "h-10 px-4 py-2",
+        default: "px-4 py-2",
         sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
       },
     },
@@ -55,9 +54,9 @@ const buttonVariants = cva(
   }
 );
 
-export function Button({ className, variant, color, size, loading, children, ...props }) {
+export function Button({ className, variant, color, size, loading, children, onClick, ...props }) {
   return (
-    <button className={cn(buttonVariants({ variant, color, size, className }))} {...props}>
+    <button className={cn(buttonVariants({ variant, color, size, className }))} {...props} onClick={() => !loading && !props.disabled && onClick()}>
       {loading && <Spinner />}
       {children}
     </button>

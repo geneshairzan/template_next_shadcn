@@ -1,11 +1,4 @@
 import UI from "@ui";
+import Home from "./home";
 
-export default function App(props) {
-  return (
-    <UI.Col center>
-      <UI.Text variant="h2" color="primary">
-        homepage
-      </UI.Text>
-    </UI.Col>
-  );
-}
+export default Home;
