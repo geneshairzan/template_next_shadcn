@@ -17,7 +17,7 @@ export default function App(props) {
       )}
 
       <UI.Text variant="h2" color="primary">
-        user gome
+        user home
       </UI.Text>
     </UI.Col>
   );
