@@ -6,26 +6,19 @@ export default function AppMiddleware({ children }) {
   const r = useRouter();
   const { auth } = React.useContext(Context);
 
-  let publicurl = ["/", "/privacypolicy", "/tnc", "/tos", "/about", "/download", "/auth"];
+  let publicurl = ["/", "/privacypolicy", "/tnc", "/tos", "/about", "/download", "/auth", "/dev"];
 
   function isPublic() {
-    if (publicurl.includes(r?.asPath)) return true;
-
-    return false;
+    if (!r?.asPath) return false;
+    return publicurl.some((p) => r.asPath.startsWith(p));
   }
 
   function isPrivateUser() {
-    if (r.asPath.includes("/u/") && auth?.user?.role_id == 2) {
-      return true;
-    }
-    return false;
+    return r.asPath.includes("/u/") && auth?.user?.role_id == 2;
   }
 
   function isPrivateAdmin() {
-    if (r.asPath.includes("/super") && auth?.user?.role_id == 1) {
-      return true;
-    }
-    return false;
+    return r.asPath.includes("/super") && auth?.user?.role_id == 1;
   }
 
   if (isPublic()) return children;
