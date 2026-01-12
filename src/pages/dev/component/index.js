@@ -3,10 +3,10 @@
 import Button from "./button";
 import React, { useState, useEffect } from "react";
 import UI from "@ui";
-import { useGlobal } from "../../../../_trash/appx/providers";
+import Context from "@context";
 
 export default function Home() {
-  const { app } = useGlobal();
+  const { app } = React.useContext(Context);
   const [onmodal, setonmodal] = useState(false);
 
   function toggleTheme() {
@@ -29,35 +29,29 @@ export default function Home() {
         </UI.ModalContainer>
       </UI.Modal>
       <UI.Icon name="home" color="#f4713a" />
-      <UI.Text
-        sx={{
-          fontSize: 64,
-        }}
-      >
-        Title HERO
-      </UI.Text>
-      <UI.Text variant="title" bold>
-        Title bold
-      </UI.Text>
-      <UI.Text variant="subtitle" italic>
-        Subtitle italic
-      </UI.Text>
-      <UI.Text variant="body">
-        body. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam fuga,
-        numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
-      </UI.Text>
-      <UI.Text variant="small">
-        small. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam fuga,
-        numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
-      </UI.Text>
-      <UI.Text variant="caption">
-        caption. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam fuga,
-        numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
-      </UI.Text>
-      <UI.Text variant="blockquote">
-        blockquote. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam
-        fuga, numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
-      </UI.Text>
+      <UI.Col className="gap-4">
+        <UI.Text variant="hero">HERO</UI.Text>
+        <UI.Text variant="title" bold>
+          Title bold
+        </UI.Text>
+        <UI.Text variant="title">Title</UI.Text>
+        <UI.Text>
+          body. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam fuga,
+          numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
+        </UI.Text>
+        <UI.Text variant="small">
+          small. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam fuga,
+          numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
+        </UI.Text>
+        <UI.Text variant="caption">
+          caption. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam
+          fuga, numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
+        </UI.Text>
+        <UI.Text variant="blockquote">
+          blockquote. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis voluptatum mollitia reprehenderit voluptate deleniti aperiam quisquam
+          fuga, numquam accusantium necessitatibus, enim sit quibusdam nostrum itaque? Iure deserunt quasi deleniti enim?
+        </UI.Text>
+      </UI.Col>
       <UI.Row>
         <UI.Button onClick={toggleTheme}>toggle</UI.Button>
       </UI.Row>

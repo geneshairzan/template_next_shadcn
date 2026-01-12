@@ -10,6 +10,7 @@ import HTML from "./html";
 import Checkbox from "./checkbox";
 import { useFormik } from "formik";
 import useForm from "./useForm";
+import { Combobox } from "./autocomplete";
 
 const Form = {
   Text,
@@ -20,6 +21,7 @@ const Form = {
   Time,
   HTML,
   Checkbox,
+  Combobox,
 };
 
 export default Form;

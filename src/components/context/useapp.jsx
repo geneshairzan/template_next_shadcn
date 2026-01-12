@@ -39,6 +39,10 @@ export default function useApp() {
     }
   }, [data]);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", data.theme === "dark");
+  }, [data.theme]);
+
   function get(target) {
     return data?.[target];
   }

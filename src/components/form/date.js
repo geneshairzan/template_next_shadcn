@@ -1,25 +1,23 @@
-"use client";
-
 import * as React from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-// import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import Wrapper from "./_wraper";
 
-import { Slot } from "@radix-ui/react-slot";
-import { cva } from "class-variance-authority";
-
-export default function DatePicker({ value, onChange, label, helperText, className }) {
-  const [date, setDate] = React.useState(value || null);
+export default function DatePicker({ value, onChange, label, helperText, className, disablePast = false, disableFuture = false }) {
+  const [date, setDate] = React.useState(value || undefined);
 
   const handleSelect = (newDate) => {
+    if (!newDate) return;
     setDate(newDate);
     onChange?.(newDate);
   };
+
+  const today = new Date();
 
   return (
     <Wrapper label={label} helperText={helperText}>
@@ -27,47 +25,24 @@ export default function DatePicker({ value, onChange, label, helperText, classNa
         <PopoverTrigger asChild>
           <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground", className)}>
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>Pick a date</span>}
+            {date ? format(date, "d MMMM yyyy") : <span>Pick a date</span>}
           </Button>
         </PopoverTrigger>
 
         <PopoverContent className="w-auto p-0" align="start">
-          <Calendar mode="single" selected={date} onSelect={handleSelect} initialFocus />
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={handleSelect}
+            initialFocus
+            disabled={(d) => {
+              if (disablePast && d < today) return true;
+              if (disableFuture && d > today) return true;
+              return false;
+            }}
+          />
         </PopoverContent>
       </Popover>
     </Wrapper>
   );
 }
-
-const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-);
-
-const Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
-  const Comp = asChild ? Slot : "button";
-  return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
-});
-
-Button.displayName = "Button"; // ✅ add this line

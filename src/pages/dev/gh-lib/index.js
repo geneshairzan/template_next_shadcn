@@ -20,7 +20,6 @@ export default function App(props) {
 
   useDebounce(
     () => {
-      console.log(user.data, search);
       setfinder(user.data.find((d) => d.id == search));
     },
     [search],

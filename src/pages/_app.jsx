@@ -1,5 +1,9 @@
+import "../style/default.css";
 import "../style/global.css";
-import "../style/table.css";
+// import "../style/themed/orange.css"; // sample color theme
+import "../style/themed/blue.css"; // sample color theme
+// import "../style/background.css"; // sample color theme
+// import "../style/table.css";
 
 import React, { useState, useEffect } from "react";
 
@@ -25,7 +29,7 @@ export default function MyApp({ Component, pageProps }) {
   if (auth?.user == "loading") return <></>;
 
   return (
-    <main className={`${geist.variable} antialiased`}>
+    <main className={`${app.theme === "dark" ? "dark" : ""} ${geist.variable} antialiased `}>
       <Context.Provider
         value={{
           auth,

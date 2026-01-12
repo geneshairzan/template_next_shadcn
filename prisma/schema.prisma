@@ -13,6 +13,18 @@ datasource db {
   provider = "postgresql"
 }
 
+model sample {
+  id   Int     @id @default(autoincrement())
+  name String?
+  type String?
+
+  data Json?
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+}
+
 model Status {
   id    Int     @id @default(autoincrement())
   name  String?

@@ -6,7 +6,6 @@ const auth = (handler) => async (r, res) => {
   // return handler(request_buffer, res);
 
   const user = await getUser(r);
-
   if (!user?.id && !r.url.includes("/auth/")) return res.status(401).json("un autorized");
 
   return handler({ ...r, auth: user }, res);

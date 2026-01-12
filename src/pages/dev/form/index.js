@@ -7,9 +7,7 @@ export default function App() {
   const formik = useForm({
     initialValues: {},
     validationSchema: null,
-    onSubmit: async (payload) => {
-      // console.log(payload);
-    },
+    onSubmit: async (payload) => {},
   });
 
   return (

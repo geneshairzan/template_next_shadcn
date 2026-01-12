@@ -7,7 +7,7 @@
       "@form": ["./src/components/form/index.js"],
       "@context/*": ["./src/components/context/*"],
       "@context": ["./src/components/context/index.js"],
-      "@component": ["./src/components/*"],
+      "@component/*": ["./src/components/*"],
       "@/lib/*": ["./src/lib/*"],
       "@lib/*": ["./src/lib/*"],
       "@fetcher": ["./src/lib/useFetch.js"]

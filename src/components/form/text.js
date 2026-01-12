@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import UI from "@ui";
 import Wrapper from "./_wraper";
 
-export default function InputWithLabel({ label, className, prefix, suffix, helperText, type = "text", ...props }) {
+export default function InputWithLabel({ label, helperText, className, prefix, suffix, type = "text", ...props }) {
   return (
     <Wrapper label={label} helperText={helperText}>
       <UI.Row
