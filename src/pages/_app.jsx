@@ -13,6 +13,7 @@ import useapp from "@context/useapp";
 import uselang from "@context/uselang";
 import ClientMiddleware from "@/components/middleware/client";
 import { Geist, Poppins } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <main className={`${app.theme === "dark" ? "dark" : ""} ${geist.variable} antialiased `}>
+      <GoogleAnalytics gaId="G-QN4K0NGDBD" />
       <Context.Provider
         value={{
           auth,

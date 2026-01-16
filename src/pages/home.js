@@ -1,6 +1,7 @@
 import UI from "@ui";
 import Context from "@context";
 import React from "react";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export default function App(props) {
   const { auth, r } = React.useContext(Context);
@@ -25,6 +26,19 @@ export default function App(props) {
       <UI.Text variant="h2" color="primary">
         user home
       </UI.Text>
+      <UI.Button
+        onClick={() => {
+          console.log("teds");
+          sendGAEvent("event", "user_scan", { s_name: "scanner name", u_name: "user name", u_role: "VIP", area: "Tennis Indoor" });
+          // sendGTMEvent({ event: "buttonClicked", value: "xyz" });
+          // window.dataLayer?.push({
+          //   event: "cta_click",
+          //   label: "test_gtm",
+          // });
+        }}
+      >
+        TEst GTM
+      </UI.Button>
     </UI.Col>
   );
 }
