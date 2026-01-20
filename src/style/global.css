@@ -26,6 +26,7 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-success: #009689;
   --color-error: #e63946;
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);

@@ -1,4 +1,4 @@
 import UI from "@ui";
-import Home from "./home";
+import Home from "./game";
 
 export default Home;

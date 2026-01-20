@@ -14,6 +14,7 @@ import uselang from "@context/uselang";
 import ClientMiddleware from "@/components/middleware/client";
 import { Geist, Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { ConvexClientProvider } from "../components/ConvexClientProvider";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -31,7 +32,7 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <main className={`${app.theme === "dark" ? "dark" : ""} ${geist.variable} antialiased `}>
-      <GoogleAnalytics gaId="G-QN4K0NGDBD" />
+      {/* <GoogleAnalytics gaId="G-QN4K0NGDBD" /> */}
       <Context.Provider
         value={{
           auth,
@@ -40,9 +41,11 @@ export default function MyApp({ Component, pageProps }) {
           lang,
         }}
       >
-        <ClientMiddleware>
-          <Component {...pageProps} key={r?.asPath} />
-        </ClientMiddleware>
+        <ConvexClientProvider>
+          <ClientMiddleware>
+            <Component {...pageProps} key={r?.asPath} />
+          </ClientMiddleware>
+        </ConvexClientProvider>
       </Context.Provider>
     </main>
   );

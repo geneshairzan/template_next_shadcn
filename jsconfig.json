@@ -10,7 +10,8 @@
       "@component/*": ["./src/components/*"],
       "@/lib/*": ["./src/lib/*"],
       "@lib/*": ["./src/lib/*"],
-      "@fetcher": ["./src/lib/useFetch.js"]
+      "@fetcher": ["./src/lib/useFetch.js"],
+      "@convexAPI": ["./convex/_generated/api.js"]
     }
   }
 }
