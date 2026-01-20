@@ -9,6 +9,7 @@ export default function Doc(props) {
         <br />✅ loops (for, while)
         <br />✅ conditions (if)
         <br />✅ functions ✅ math
+        <br />✅ add adiotnal doc
       </UI.Text>
     </UI.Col>
   );
