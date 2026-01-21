@@ -27,6 +27,7 @@
     "@react-email/components": "^1.0.5",
     "@react-email/render": "^2.0.3",
     "@react-oauth/google": "^0.13.4",
+    "@supabase/supabase-js": "^2.91.0",
     "axios": "^1.13.2",
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
