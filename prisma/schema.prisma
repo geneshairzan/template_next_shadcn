@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -13,16 +7,21 @@ datasource db {
   provider = "postgresql"
 }
 
-model sample {
-  id   Int     @id @default(autoincrement())
-  name String?
-  type String?
+enum AssetType {
+  STOCK
+  FOREX
+  COMMODITY
+  CRYPTO
+  ETF
+  INDEX
+  CURRENCY
+}
 
-  data Json?
-
-  created_at DateTime  @default(now())
-  updated_at DateTime  @default(now()) @updatedAt
-  deleted_at DateTime?
+enum IntervalType {
+  m1
+  D1
+  M1
+  Y1
 }
 
 model Status {
@@ -49,35 +48,192 @@ model Role {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  email    String? @unique
-  name     String?
-  password String?
-  token    String?
-  phone    String?
+  id String @id @default(cuid())
+  // email    String? @unique
+  // name     String?
+  // password String?
+  // token    String?
+  // phone    String?
 
   role_id   Int? @default(3)
-  status_id Int  @default(1)
+  status_id Int? @default(1)
 
   created_at DateTime  @default(now())
   updated_at DateTime  @default(now()) @updatedAt
   deleted_at DateTime?
 
-  role   Role?  @relation(fields: [role_id], references: [id])
-  status Status @relation(fields: [status_id], references: [id])
-  posts  Post[]
+  role   Role?   @relation(fields: [role_id], references: [id])
+  status Status? @relation(fields: [status_id], references: [id])
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  user_id   String
+model product {
+  // id   String  @id @default(cuid())
+  id   String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name String? @default("20") @db.VarChar
+  desc String?
 
-  deleted_at DateTime?
+  created_at DateTime  @default(now())
   updated_at DateTime  @default(now()) @updatedAt
-  created_at DateTime?
+  deleted_at DateTime?
+}
 
-  author User @relation(fields: [user_id], references: [id])
+// recheck later : 
+// Stocks (AAPL)
+// Currencies (USD, IDR)
+// Commodities (XAU)
+// Crypto (BTC)
+// Indices (SPX)
+
+model symbol {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  symbol      String // AAPL, EURUSD, XAUUSD
+  name        String // Apple Inc
+  description String?
+
+  type     AssetType
+  exchange String? // NASDAQ, NYSE, FX, CME
+
+  source String // alpha_vantage, yahoo, manual
+  active Boolean @default(true)
+
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime  @db.Timestamptz(6)
+  deleted_at DateTime? @db.Timestamptz(6)
+
+  exchangesFrom   market[]          @relation(name: "ExchangeFrom")
+  exchangesTo     market[]          @relation(name: "ExchangeTo")
+  symbolOverviews symbol_overview[]
+
+  @@unique([symbol, type])
+  @@index([type])
+  @@index([exchange])
+}
+
+model market {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  from_id String  @db.Uuid // IDR
+  to_id   String  @db.Uuid // USD
+  short   String? // ie IDRUSD
+  source  String?
+
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime  @db.Timestamptz(6)
+  deleted_at DateTime?
+
+  from         symbol?         @relation(name: "ExchangeFrom", fields: [from_id], references: [id])
+  to           symbol?         @relation(name: "ExchangeTo", fields: [to_id], references: [id])
+  marketSeries market_series[]
+
+  @@unique([from_id, to_id, source])
+}
+
+model market_series {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  market_id String @db.Uuid
+
+  timestamp DateTime     @db.Timestamptz(6)
+  interval  IntervalType // 1m, 1M, 1Y
+
+  open   Float
+  high   Float
+  low    Float
+  close  Float
+  volume Float?
+
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime  @db.Timestamptz(6)
+  deleted_at DateTime? @db.Timestamptz(6)
+
+  market market? @relation(fields: [market_id], references: [id])
+
+  @@unique([market_id, timestamp, interval])
+  @@index([market_id, interval, timestamp])
+}
+
+model symbol_overview {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  symbol_id String @db.Uuid
+
+  asset_type String? // Common Stock, ETF, FX, Crypto
+
+  cik      String?
+  currency String?
+  country  String?
+  sector   String?
+  industry String?
+  address  String?
+
+  official_site   String?
+  fiscal_year_end String?
+
+  latest_quarter DateTime? @db.Date
+
+  market_capitalization BigInt?
+  ebitda                BigInt?
+
+  pe_ratio    Decimal?
+  peg_ratio   Decimal?
+  trailing_pe Decimal?
+  forward_pe  Decimal?
+
+  price_to_sales_ratio_ttm Decimal?
+  price_to_book_ratio      Decimal?
+  ev_to_revenue            Decimal?
+  ev_to_ebitda             Decimal?
+
+  book_value Decimal?
+  beta       Decimal?
+
+  eps                   Decimal?
+  diluted_eps_ttm       Decimal?
+  revenue_per_share_ttm Decimal?
+
+  revenue_ttm      BigInt?
+  gross_profit_ttm BigInt?
+
+  profit_margin        Decimal?
+  operating_margin_ttm Decimal?
+  return_on_assets_ttm Decimal?
+  return_on_equity_ttm Decimal?
+
+  quarterly_earnings_growth_yoy Decimal?
+  quarterly_revenue_growth_yoy  Decimal?
+
+  dividend_per_share Decimal?
+  dividend_yield     Decimal?
+  dividend_date      DateTime?
+  ex_dividend_date   DateTime?
+
+  analyst_target_price       Decimal?
+  analyst_rating_strong_buy  Int?
+  analyst_rating_buy         Int?
+  analyst_rating_hold        Int?
+  analyst_rating_sell        Int?
+  analyst_rating_strong_sell Int?
+
+  week_52_high Decimal?
+  week_52_low  Decimal?
+
+  day_50_moving_average  Decimal?
+  day_200_moving_average Decimal?
+
+  shares_outstanding BigInt?
+  shares_float       BigInt?
+
+  percent_insiders     Decimal?
+  percent_institutions Decimal?
+
+  source String // alpha_vantage, yahoo
+
+  as_of_date DateTime? // optional snapshot date (recommended)
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+
+  symbol symbol @relation(fields: [symbol_id], references: [id], onDelete: Cascade)
+
+  @@unique([symbol_id, source, as_of_date])
+  @@index([symbol_id])
+  @@index([as_of_date])
 }

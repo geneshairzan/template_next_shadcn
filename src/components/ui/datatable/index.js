@@ -7,10 +7,11 @@ import Pagination from "./pagination";
 import { useDebounce } from "gh-lib";
 
 export { useTable } from "./useTable";
+export { useSupabase } from "./useSupabase";
 
 const defaultStyle = {
   rowHeight: 36,
-  minCellWidth: 200,
+  minCellWidth: 120,
   bgcolor: "bg-card",
   bgcolorHeader: "bg-primary",
   bgcolorEven: "bg-[#e0edff]",
@@ -46,7 +47,7 @@ function Search({ table }) {
       table.setQ(search);
     },
     [search],
-    500
+    500,
   );
   return (
     <UI.Row>
