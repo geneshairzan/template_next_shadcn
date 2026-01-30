@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { fetcher } from "@lib/useFetch";
-import Datatable, { useSupabase } from "@/components/ui/datatable";
+import Datatable, { useTable } from "@/components/ui/datatable";
 import UI from "@ui";
-import TeenantLayout from "@/components/layout/teenant";
 
 export default function SymbolPage() {
-  const table = useSupabase({
+  const table = useTable({
     url: "symbol",
     perpage: 100,
   });
 
   return (
-    <TeenantLayout>
+    <>
       <TopSection />
       <Datatable
         table={table}
@@ -27,7 +26,7 @@ export default function SymbolPage() {
         ]}
       />
       <UI.Col className="h-[5dvh] bg-blue-50 text-error">bottom</UI.Col>
-    </TeenantLayout>
+    </>
   );
 }
 

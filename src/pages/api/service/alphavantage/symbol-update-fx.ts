@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabaseAdmin as supabase } from "@/lib/supabase/admin";
+import prisma, { manyUpsert } from "@/lib/prisma";
 
 const API_KEY = process.env.ALPHAVANTAGE_API_KEY!;
 // const CRON_SECRET = process.env.CRON_SECRET!;
@@ -37,11 +37,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    const { error } = await supabase.from("symbol").upsert(rows, { onConflict: "symbol,type" });
+    await manyUpsert({
+      table: "symbol",
+      rows,
+      conflictColumns: "symbol,type",
+    });
 
-    if (error) throw error;
-
-    res.json({ success: true, imported: rows.length, data: rows });
+    res.json({ success: true, imported: rows.length, data: rows.length });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Symbol sync failed" });

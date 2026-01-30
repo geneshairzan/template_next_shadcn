@@ -101,6 +101,6 @@ async function handleGet(r, res) {
           ...d,
           has_pwd: d?.password ? true : false,
         })),
-    ])
+    ]),
   );
 }

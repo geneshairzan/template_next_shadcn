@@ -1,5 +1,4 @@
-import { Button } from "./button";
-// import { Button } from "./composed/themedButton";
+import { ThemedButton as Button } from "./composed/themedButton";
 import IconButton from "./composed/iconButton";
 import Stack from "./composed/stack";
 import Modal from "./composed/modal";

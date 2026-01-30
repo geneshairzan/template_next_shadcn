@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabaseAdmin as supabase } from "@/lib/supabase/admin";
-import prisma, { manyUpsert } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 // import { PrismaClient as prisma } from "@prisma/client";
+
 const API_KEY = process.env.ALPHAVANTAGE_API_KEY!;
 // const CRON_SECRET = process.env.CRON_SECRET!;
 
@@ -30,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const [symbol, name, exchange, assetType, , , status] = cols;
       if (status.trim() !== "Active") continue;
 
-      rows.push({
+      const payload = {
         symbol,
         name,
         exchange,
@@ -38,16 +39,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         source: "alpha_vantage",
         active: true,
         updated_at: new Date(),
+      };
+
+      await prisma.symbol.upsert({
+        where: {
+          symbol_type: {
+            symbol: payload.symbol,
+            type: payload.type,
+          },
+        },
+        create: payload,
+        update: {
+          ...payload,
+          updated_at: new Date(),
+        },
       });
     }
 
-    await manyUpsert({
-      table: "symbol",
-      rows,
-      conflictColumns: "symbol,type",
-    });
-
     return res.json({ success: true, imported: rows.length });
+
+    res.json({ success: true, imported: rows.length });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Symbol sync failed" });

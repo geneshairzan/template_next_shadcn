@@ -1,5 +1,7 @@
-import { PrismaClient } from "../generated/prisma/client";
+import { PrismaClient } from "../../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+
+export { manyUpsert } from "./manyUpsert";
 
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient;

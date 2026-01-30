@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabaseAdmin as supabase } from "@/lib/supabase/admin";
+import prisma, { manyUpsert } from "@/lib/prisma";
 
 const API_KEY = process.env.ALPHAVANTAGE_API_KEY!;
 // const CRON_SECRET = process.env.CRON_SECRET!;
@@ -19,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const raw = await (await fetch(url)).json();
 
     const rows = Object.entries(raw.Series).map(([timestamp, ohlc]) => ({
-      market_id: "37c3b273-cdd0-4814-b155-3ff2e434f7c9",
+      market_id: "2ca059c8-fe54-4eba-97e0-187660fbdad4",
       timestamp: new Date(timestamp),
       interval: "M1", // or whatever interval this data represents
       open: parseFloat(ohlc["1. open"]),
@@ -32,11 +33,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }));
 
     // 3. Upsert into market_series
-    const { error: seriesError } = await supabase.from("market_series").upsert(rows, {
-      onConflict: "market_id,timestamp,interval",
+    await manyUpsert({
+      table: "market_series",
+      rows,
+      conflictColumns: "market_id,timestamp,interval",
     });
 
-    if (seriesError) console.error(seriesError);
+    // const { error: seriesError } = await supabase.from("market_series").upsert(rows, {
+    //   onConflict: "market_id,timestamp,interval",
+    // });
+
+    // if (seriesError) console.error(seriesError);
 
     return res.json({ success: true, imported: rows.length });
   } catch (err) {

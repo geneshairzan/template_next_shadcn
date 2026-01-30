@@ -15,7 +15,6 @@ export function useTable({ url, latency = 1000, perpage = 50 }) {
 
   async function getData() {
     // settable((prev) => ({ ...prev, isLoading: true }));
-    console.log("first");
     let res = await fetcher({
       url: url + `?perpage=${table?.perpage}&p=${table?.page}&q=${table?.q}&by=${table?.by}&order=${table?.order}`,
     });
@@ -29,7 +28,7 @@ export function useTable({ url, latency = 1000, perpage = 50 }) {
       getData();
     },
     [table.page, table.q, table.perpage, table.by, table.order],
-    latency
+    latency,
   );
 
   useEffect(() => {

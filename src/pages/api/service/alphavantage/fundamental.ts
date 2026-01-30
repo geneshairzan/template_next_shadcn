@@ -1,12 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabaseAdmin as supabase } from "@/lib/supabase/admin";
+import prisma, { manyUpsert } from "@/lib/prisma";
+import { jsonSafe } from "@/lib/apiHandler";
 
 const API_KEY = process.env.ALPHAVANTAGE_API_KEY!;
 // const CRON_SECRET = process.env.CRON_SECRET!;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const symbol = "IBM";
-
   if (req.method !== "POST") {
     // return res.status(405).json({ error: "Method not allowed" });
   }
@@ -16,24 +15,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // }
 
   try {
-    const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`;
-    // const url = `https://localhost:3000/assets/data/usdidr.json`;
+    const input = "IBM";
+    const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${input}&apikey=${API_KEY}`;
     const raw = await (await fetch(url)).json();
     const forPrisma = mapAlphaOverviewToSymbolOverview(raw);
-    const { data: symbol } = await supabase.from("symbol").select("*").eq("symbol", "IBM");
-    const newdata = await supabase.from("symbol_overview").upsert(
-      {
-        ...forPrisma,
-        symbol_id: "5576d242-b24a-4331-9148-d57d48c45bf9",
+    const symbol = await prisma.symbol.findUnique({
+      where: {
+        symbol_type: {
+          symbol: input,
+          type: "STOCK",
+        },
       },
-      { onConflict: "symbol_id,source,as_of_date" },
-    );
-
-    return res.json({
-      symbol,
-      forPrisma,
-      newdata,
     });
+    const newdata = await prisma.symbol_overview.upsert({
+      where: {
+        symbol_id_source_as_of_date: {
+          symbol_id: symbol.id,
+          source: forPrisma.source,
+          as_of_date: forPrisma.as_of_date,
+        },
+      },
+      create: {
+        ...forPrisma,
+        symbol_id: symbol.id,
+      },
+      update: {
+        ...forPrisma,
+      },
+    });
+
+    return res.json(jsonSafe(newdata));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Symbol sync failed" });

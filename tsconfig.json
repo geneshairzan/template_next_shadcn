@@ -13,7 +13,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@/public/*": ["./public/*"],
@@ -28,6 +27,6 @@
       "@convexAPI": ["./convex/_generated/api.js"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.mts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.mts", "**/*.ts", "**/*.tsx", "src/lib/prisma.js"],
   "exclude": ["node_modules"]
 }

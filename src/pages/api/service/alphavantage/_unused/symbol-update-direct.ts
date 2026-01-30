@@ -1,7 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabaseAdmin as supabase } from "@/lib/supabase/admin";
-import prisma, { manyUpsert } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 // import { PrismaClient as prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+
 const API_KEY = process.env.ALPHAVANTAGE_API_KEY!;
 // const CRON_SECRET = process.env.CRON_SECRET!;
 
@@ -41,11 +43,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    await manyUpsert({
-      table: "symbol",
-      rows,
-      conflictColumns: "symbol,type",
-    });
+    await prisma.$queryRaw`
+        INSERT INTO symbol (
+          symbol,
+          type,
+          name,
+          exchange,
+          source,
+          active
+        )
+        VALUES
+        ${Prisma.join(
+          rows.map(
+            (r) => Prisma.sql`(
+              ${r.symbol},
+              ${r.type},
+              ${r.name},
+              ${r.exchange},
+              ${r.source},
+              ${r.active}
+            )`,
+          ),
+        )}
+        ON CONFLICT (symbol, type)
+        DO UPDATE SET
+          name       = EXCLUDED.name,
+          exchange   = EXCLUDED.exchange,
+          source     = EXCLUDED.source,
+          active     = EXCLUDED.active,
+          updated_at = now();
+      `;
 
     return res.json({ success: true, imported: rows.length });
   } catch (err) {

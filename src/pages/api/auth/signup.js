@@ -30,7 +30,7 @@ export default async function handler(r, res) {
         EmailTemplate({
           msg: "In order to verified your email address,\n please enter code below in Application.\n",
           code: passcode,
-        })
+        }),
       ),
     });
 

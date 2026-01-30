@@ -7,7 +7,7 @@ import Pagination from "./pagination";
 import { useDebounce } from "gh-lib";
 
 export { useTable } from "./useTable";
-export { useSupabase } from "./useSupabase";
+// export { useSupabase } from "./useSupabase";
 
 const defaultStyle = {
   rowHeight: 36,

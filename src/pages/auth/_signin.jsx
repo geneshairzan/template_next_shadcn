@@ -31,7 +31,7 @@ export default function Signin({ onSignup }) {
       </p>
       <Form.Text autocomplete="off" label="email" name="email" value={formik.values.email} onChange={(e) => formik.set("email", e)} />
       <Form.Text
-        autocomplete="new-password"
+        autoComplete="new-password"
         label="password"
         name="password"
         type="password"

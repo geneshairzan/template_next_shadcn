@@ -1,6 +1,9 @@
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
+
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
 }
 
 datasource db {
@@ -48,12 +51,12 @@ model Role {
 }
 
 model User {
-  id String @id @default(cuid())
-  // email    String? @unique
-  // name     String?
-  // password String?
-  // token    String?
-  // phone    String?
+  id       String  @id @default(cuid())
+  email    String? @unique
+  name     String?
+  password String?
+  token    String?
+  phone    String?
 
   role_id   Int? @default(3)
   status_id Int? @default(1)
